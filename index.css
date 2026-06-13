@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "Share Tech Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+  --font-rubik: "Rubik", sans-serif;
+  --font-fixed: "Roboto Mono", monospace;
+  --font-ibm: "IBM Plex Mono", monospace;
+  --font-chakra: "Chakra Petch", sans-serif;
+  --font-orbitron: "Orbitron", sans-serif;
+  --font-quantico: "Quantico", sans-serif;
+  --font-electro: "Electrolize", sans-serif;
+  --font-rajdhani: "Rajdhani", sans-serif;
+  --font-michroma: "Michroma", sans-serif;
+  --font-bruno: "Bruno Ace", sans-serif;
+  --font-audiowide: "Audiowide", sans-serif;
+  --font-tektur: "Tektur", sans-serif;
+  --font-wallpoet: "Wallpoet", cursive;
+  --font-syncopate: "Syncopate", sans-serif;
+  --font-syne: "Syne Mono", monospace;
+  --font-exo: "Exo 2", sans-serif;
+  --font-saira: "Saira Stencil One", sans-serif;
+  --font-turret: "Turret Road", sans-serif;
+  --font-oxanium: "Oxanium", sans-serif;
+  --font-narrow: "Share Tech Mono", monospace;
+
+  --color-panel: #18181b; /* zinc-950 */
+  --color-surface: #27272a; /* zinc-800 */
+  --color-accent: #f59e0b; /* amber-500 */
+  --color-success: #10b981; /* emerald-500 */
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* Prevent bounce scroll on root */
+  background-color: #09090b; /* zinc-950 */
+  color: #e4e4e7; /* zinc-200 */
+  overscroll-behavior: none; /* Prevent pull-to-refresh */
+  touch-action: none; /* CRITICAL: Disable browser zooming/panning globally */
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  user-select: none !important; /* Global text selection ban */
+}
+
+/* ZERO LATENCY ENFORCEMENT */
+* {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Remove focus outlines globally */
+*:focus {
+  outline: none !important;
+}
+
+/* Custom Scrollbar for technical look */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #18181b;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}

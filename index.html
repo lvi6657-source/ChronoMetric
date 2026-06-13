@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>ChronoMetric - Engineering Timer</title>
+    <script>
+      window.addEventListener('error', function(e) {
+        var diagnostics = document.getElementById('error-diagnostics') || document.createElement('div');
+        diagnostics.id = 'error-diagnostics';
+        diagnostics.style = 'position:fixed;bottom:20px;left:20px;right:20px;background:#7f1d1d;color:#fef2f2;padding:15px;border-radius:8px;z-index:999999;font-family:monospace;font-size:12px;max-height:50vh;overflow:auto;box-shadow:0 10px 15px -3px rgba(0,0,0,0.5);border:1px solid #f87171;';
+        diagnostics.innerHTML += '<div><strong>[Error]:</strong> ' + e.message + '<br><small>' + e.filename + ':' + e.lineno + '</small></div>';
+        document.body.appendChild(diagnostics);
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        var diagnostics = document.getElementById('error-diagnostics') || document.createElement('div');
+        diagnostics.id = 'error-diagnostics';
+        diagnostics.style = 'position:fixed;bottom:20px;left:20px;right:20px;background:#7f1d1d;color:#fef2f2;padding:15px;border-radius:8px;z-index:999999;font-family:monospace;font-size:12px;max-height:50vh;overflow:auto;box-shadow:0 10px 15px -3px rgba(0,0,0,0.5);border:1px solid #f87171;';
+        diagnostics.innerHTML += '<div><strong>[Promise Rejection]:</strong> ' + (e.reason ? (e.reason.message || e.reason) : 'No reason') + '</div>';
+        document.body.appendChild(diagnostics);
+      });
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600&family=Rubik:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Chakra+Petch:wght@400;500;700&family=Orbitron:wght@400;700&family=Quantico:wght@400;700&family=Electrolize&family=Rajdhani:wght@500;600;700&family=Michroma&family=Bruno+Ace&family=Audiowide&family=Tektur:wght@400;500;600;700&family=Wallpoet&family=Syncopate:wght@400;700&family=Syne+Mono&family=Exo+2:wght@400;600;700&family=Saira+Stencil+One&family=Turret+Road:wght@400;500;700&family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+      // AGGRESSIVE ZOOM BLOCKER
+      
+      // 1. Block Pinch-to-Zoom (iOS Safari)
+      document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+      });
+
+      document.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+      });
+
+      document.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+      });
+
+      // 2. Block Ctrl + Wheel (Desktop/Trackpad Zoom)
+      document.addEventListener('wheel', function(e) {
+        if (e.ctrlKey) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // 3. Block Double-Tap Zoom (Legacy Mobile)
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function(event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+
+      // 4. Prevent Keyboard Zoom
+      document.addEventListener('keydown', function(event) {
+        if ((event.ctrlKey || event.metaKey) && (event.key === '+' || event.key === '-' || event.key === '=')) {
+          event.preventDefault();
+        }
+      });
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "recharts": "https://aistudiocdn.com/recharts@^3.4.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

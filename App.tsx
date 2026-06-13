@@ -18,7 +18,7 @@ import ProgressBar from './components/ProgressBar';
 import StatsPanel from './components/StatsPanel';
 import { getFullVersion } from './version';
 import { APP_CONFIG } from './config'; // IMPORT GLOBAL CONFIG
-import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 
 // --- Helpers ---
 // Format static delta value (number) for display
@@ -241,12 +241,8 @@ const TimerDisplay = React.memo(({
 
             {/* Right Side: Stats Stack */}
             <div 
-                className="h-full flex flex-col justify-between pr-4 relative z-30"
-                style={{ 
-                    width: `${(1 - APP_CONFIG.layout.timerWidthRatio) * 100}%`,
-                    paddingTop: '0px',
-                    paddingBottom: '42px'
-                }}
+                className="h-full flex flex-col justify-between pt-0 pb-18 pr-4 relative z-30"
+                style={{ width: `${(1 - APP_CONFIG.layout.timerWidthRatio) * 100}%` }}
             >
                 {/* Row 1: Rounds Count */}
                 <div 
@@ -598,24 +594,34 @@ export default function App() {
       osc.stop(ctx.currentTime + 0.15);
   }, [isMuted, getAudioContext]);
 
-  const triggerHaptic = useCallback(async (pattern: 'click' | 'success' | 'failure' | 'tick') => {
+  const triggerHaptic = useCallback((pattern: 'click' | 'success' | 'failure' | 'tick') => {
       if (!isVibrationEnabled) return;
       try {
+          // Native Capacitor Haptics (for iOS & Android)
           switch (pattern) {
               case 'click':
-                  await Haptics.impact({ style: ImpactStyle.Medium });
+                  Haptics.impact({ style: ImpactStyle.Light }).catch(() => {
+                      if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(15);
+                  });
                   break;
               case 'success':
-                  await Haptics.notification({ type: 'SUCCESS' as any });
+                  Haptics.notification({ type: NotificationType.Success }).catch(() => {
+                      if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate([10, 30, 10]);
+                  });
                   break;
               case 'failure':
-                  await Haptics.notification({ type: 'ERROR' as any });
+                  Haptics.notification({ type: NotificationType.Error }).catch(() => {
+                      if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(50);
+                  });
                   break;
               case 'tick':
-                  await Haptics.impact({ style: ImpactStyle.Light });
+                  Haptics.impact({ style: ImpactStyle.Light }).catch(() => {
+                      if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(5);
+                  });
                   break;
           }
       } catch (e) {
+          // Fallback to HTML5 Web Vibration API
           if (typeof navigator !== 'undefined' && navigator.vibrate) {
               switch (pattern) {
                   case 'click': navigator.vibrate(15); break;
